@@ -11,6 +11,3 @@ $v2 = new Voiture("Peugeot", 5000, $p1, 800);
 
 var_dump($v1);
 var_dump($p1);
-
-
-
