@@ -6,18 +6,20 @@ class Voiture{
     private $matricule;
     private $marque;
     private $prix;
+    private $proprio;
 
     // variables de classe
     private static $compteur = 0;
     public const PORTE = 4;
 
     //constructeur
-    public function __construct($marque, $prix, $id = 0){
+    public function __construct(string $marque, float $prix, Personne $proprio, $id = 0){
         self::$compteur++;
 
         $this->id = $id;
         $this->marque = $marque;
-        $this->setPrix($prix) ;
+        $this->setPrix($prix);
+        $this->proprio = $proprio;
         $this->matricule = $this->makeMatricule()."_".self::$compteur;
     }
 

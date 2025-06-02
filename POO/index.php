@@ -1,15 +1,16 @@
 <?php
 
 include "Entity/Voiture.php";
+include "Entity/Personne.php";
 
-$v1 = new Voiture("Opel", 7800);
-$v2 = new Voiture("Peugeot", 5000, 800);
+$p1 = new Personne(1, "Jean", "aston", "aston");
 
-$v1->setPrix(5666);
+$v1 = new Voiture("Opel", 7800, $p1);
+$v2 = new Voiture("Peugeot", 5000, $p1, 800);
 
 
 var_dump($v1);
-var_dump($v2);
+var_dump($p1);
 
 
 
