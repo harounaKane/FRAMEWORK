@@ -8,13 +8,15 @@ class Personne
     private $prenom;
     private $login;
     private $mdp;
+    private $role;
 
-    public function __construct($id,  $prenom,  $login,  $mdp)
+    public function __construct($id,  $prenom,  $login,  $mdp, $role)
     {
         $this->id = $id;
         $this->prenom = $prenom;
         $this->login = $login;
         $this->mdp = $mdp;
+        $this->role = $role;
     }
 
 
@@ -46,6 +48,8 @@ class Personne
         $this->id = $id;
     }
 
+    public function getRole(){return $this->role;}
+
     public function setPrenom($prenom): void
     {
         $this->prenom = $prenom;
@@ -59,5 +63,9 @@ class Personne
     public function setMdp($mdp): void
     {
         $this->mdp = $mdp;
+    }
+
+    public function setRole($role){
+        $this->role = $role;
     }
 }

@@ -11,6 +11,8 @@ abstract class ControllerAbstract{
 
         extract($data);
 
+        include $page;
+        
         $content = ob_get_clean();
 
         include "Views/template.php";
