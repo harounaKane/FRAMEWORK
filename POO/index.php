@@ -3,11 +3,45 @@
 include "Entity/Voiture.php";
 include "Entity/Personne.php";
 
-$p1 = new Personne(1, "Jean", "aston", "aston");
+$pdo = new PDO("mysql:host=localhost;dbname=aston_poo", "root", "", [
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+]);
 
-$v1 = new Voiture("Opel", 7800, $p1);
-$v2 = new Voiture("Peugeot", 5000, $p1, 800);
+include "fonction.php";
 
+$tab = getPersonnes();
+?>
 
-var_dump($v1);
-var_dump($p1);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav>
+        <a href=".">Personne</a>
+        <a href="voiture.php">Voiture</a>
+    </nav>
+
+    <main>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Prénom</th>
+                <th>Login</th>
+            </tr>
+        
+            <?php foreach($tab as $personne): ?>
+                <tr>
+                    <td> <?php echo $personne->getId(); ?> </td>
+                    <td> <?= $personne->getPrenom(); ?> </td>
+                    <td> <?= $personne->getLogin(); ?> </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </main>
+
+</body>
+</html>
