@@ -20,7 +20,7 @@
     </header>    
 
     <main class="container-fluid">
-        <?= $content ?? ''; ?>
+        <?= $content ?? 'Contenu vide !!'; ?>
     </main>
 
     <footer class="bg-light p-4 mt-5 text-center">
