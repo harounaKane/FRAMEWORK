@@ -4,7 +4,8 @@ include "Entity/Voiture.php";
 include "Entity/Personne.php";
 
 $pdo = new PDO("mysql:host=localhost;dbname=aston_poo", "root", "", [
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
 ]);
 
 include "fonction.php";
@@ -34,21 +35,56 @@ $tab = [];
     extract($_POST);
     $p = getPersonneById($proprio);
 
-    $v = new Voiture($marque, $prix, $p);
+    $v = new Voiture($marque, $prix, $p, $id);
 
-    $query = "INSERT INTO voiture (matricule, marque, prix, proprio) VALUES(:matricule, :marque, :price, :proprio)";
+    // INSERTION
+    if( empty($_POST['id']) ){
+        $query = "INSERT INTO voiture (matricule, marque, prix, proprio) VALUES(:matricule, :marque, :price, :proprio)";
 
-    $res = $pdo->prepare($query);
-    $res->execute([
-        "matricule" => $v->getMatricule(),
-        "marque"    => $v->getMarque(),
-        "price"     => $v->getPrix(),
-        "proprio"    => $v->getProprio()->getId()
-    ]);
+        $res = $pdo->prepare($query);
+        $res->execute([
+            "matricule" => $v->getMatricule(),
+            "marque"    => $v->getMarque(),
+            "price"     => $v->getPrix(),
+            "proprio"    => $v->getProprio()->getId()
+        ]);
+        //UPDATE
+    }else{
+        var_dump($v);
+        $query = "UPDATE voiture SET marque = ?, prix = ?, proprio = ? WHERE id = ?";
+
+        $res = $pdo->prepare($query);
+        var_dump($res);
+
+        $res->execute([
+            $v->getMarque(),
+            $v->getPrix(),
+            $v->getProprio()->getId(),
+            $v->getId()
+        ]);
+    }
+
 
     // redirection
-    header("location: voiture.php");
+   header("location: voiture.php");
     exit;
+ }
+
+ if( isset($_GET['action']) ){
+    $action = $_GET['action'];
+
+    switch( $action ){
+        case "delete":
+            $res = $pdo->prepare("DELETE FROM voiture WHERE id = ?");
+            $res->execute( [$_GET['id']] );
+            // redirection
+            header("location: voiture.php");
+            exit;
+
+        case "update":
+            $voitureUp = getVoitureById($_GET['id']);
+            break;
+    }
  }
 
 ?>
@@ -83,22 +119,26 @@ $tab = [];
                     <td> <?= $voiture->getPrix(); ?> </td>
                     <td> <?= $voiture->getProprio()->getPrenom(); ?> </td>
                     <td>
-                        <a href="">U</a> | 
-                        <a href="">X</a>
+                        <a href="?action=update&id=<?= $voiture->getId(); ?>">U</a> | 
+                        <a href="?action=delete&id=<?= $voiture->getId(); ?>">X</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </table>
 
+        <p></p><p></p>
+
         <form action="" method="post">
+            <input type="hidden" value="<?= isset($voitureUp) ? $voitureUp->getId() : '0' ?>" name="id">
             <label for="">Marque</label>
-            <input type="text" name="marque">
+            <input type="text" name="marque" value="<?= isset($voitureUp) ? $voitureUp->getMarque() : '' ?>">
             <label for="">Prix</label>
-            <input type="text" name="prix">
+            <input type="text" name="prix" value="<?= isset($voitureUp) ? $voitureUp->getPrix() : '' ?>">
 
             <select name="proprio" id="">
                 <?php foreach($personnes as $personne): ?>
-                    <option value="<?= $personne->getId(); ?>"> 
+                    <option value="<?= $personne->getId(); ?>" 
+                    <?= (isset($voitureUp) && $personne->getId() == $voitureUp->getProprio()->getId()) ? 'selected' : ''  ?> > 
                         <?= $personne->getPrenom(); ?> 
                     </option>
                 <?php endforeach; ?>

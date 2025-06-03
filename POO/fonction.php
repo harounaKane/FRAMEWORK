@@ -29,3 +29,19 @@ function getPersonneById($id){
 
     return $p;
 }
+
+function getVoitureById($id){
+    global $pdo;
+
+    $stmt = $pdo->prepare("SELECT * FROM voiture WHERE id = ?");
+    $stmt->execute( [$id] );
+    $resQuery = $stmt->fetch();
+    extract($resQuery);
+
+    $p = getPersonneById($proprio);
+
+    $v = new Voiture($marque, $prix, $p, $id);
+    $v->setMatricule($matricule);
+
+    return $v;
+}
