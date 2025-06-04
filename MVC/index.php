@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 use MVC\Controller\PersonneController;
 
 include "vendor/autoload.php";

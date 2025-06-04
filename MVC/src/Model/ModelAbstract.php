@@ -36,7 +36,7 @@ abstract class ModelAbstract{
     }
 
     abstract function add($objet);
-    abstract function delete($objet);
+    abstract function delete($id);
     abstract function update($objet);
     abstract function find($id);
     abstract function findAll();

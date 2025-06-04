@@ -15,8 +15,8 @@
                 <td> <?= $personne->getLogin(); ?> </td>
                 <td> <?= $personne->getRole(); ?> </td>
                 <td>
-                    <a href="">U</a> | 
-                    <a href="">X</a>
+                    <a href="?actionUser=update&id=<?= $personne->getId(); ?>"><i class="fa-solid fa-pen"></i></a> | 
+                    <a href="?actionUser=sow&id=<?= $personne->getId(); ?>"><i class="fa-solid fa-eye"></i></a>
                 </td>
             </tr>
         <?php endforeach; ?>
