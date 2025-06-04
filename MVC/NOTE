@@ -1,0 +1,14 @@
+1. Créer une entité Article : 
+    id
+    libelle
+    prix : [55, 370]
+    dateCreation
+    datePeremption
+
+Contraintes : 
+    libelle : unique
+    dateCreation < datePeremption
+
+2. Controller
+3. Model
+4. Vues
