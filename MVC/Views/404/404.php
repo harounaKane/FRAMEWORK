@@ -1,0 +1,1 @@
+    <h2 class="text-center alert alert-danger">Cette page n'existe pas</h2>

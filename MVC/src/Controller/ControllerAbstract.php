@@ -9,9 +9,13 @@ abstract class ControllerAbstract{
 
         $page = "Views/" . $view . ".php";
 
-        extract($data);
+        if( file_exists($page) ){
+            extract($data);
 
-        include $page;
+            include $page;
+        }else{
+            include "Views/404/404.php";
+        }
         
         $content = ob_get_clean();
 

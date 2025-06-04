@@ -15,6 +15,7 @@ abstract class ModelAbstract{
     }
 
     public function executerReq(string $query, $data = []){
+
         $stmt = $this->pdo->prepare($query);
 
         $stmt->execute($data);
@@ -29,7 +30,9 @@ abstract class ModelAbstract{
     }
 
     public function getById($table, $id){
-        $query = "SELECT * FROM " . $table . " WHERE id = :id";
+
+        $query = "SELECT * FROM $table WHERE id = :id";
+
         $stmt = $this->executerReq($query, ["id" => $id]);
         
         return $stmt;

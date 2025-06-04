@@ -19,7 +19,7 @@
 
                 <?php if( unserialize($_SESSION['user'])->getRole() ): ?>
                     <a href="?actionUser=user" class="navbar-brand">Personne</a>
-                    <a href="" class="navbar-brand">Voiture</a>
+                    <a href="?actionVoiture=voiture" class="navbar-brand">Voiture</a>
                 <?php endif; ?>
 
                 <a href="?actionUser=logout" class="navbar-brand">Déconnexion</a>
